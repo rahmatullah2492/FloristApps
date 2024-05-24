@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "757640831794",
+    "project_id": "gardenapp-4eca3",
+    "storage_bucket": "gardenapp-4eca3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757640831794:android:4852d85aa2727377352d2b",
+        "android_client_info": {
+          "package_name": "com.plant.marcingband"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa91jiB5zeZpgZy8iLdIJf9hSYBfr0O_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

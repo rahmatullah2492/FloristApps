@@ -1,0 +1,54 @@
+name: Florist
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  dio: ^5.4.3+1
+  firebase_auth: ^4.19.4
+  firebase_core: ^2.30.1
+  flutter:
+    sdk: flutter
+  fluttertoast: ^8.2.5
+  get: ^4.6.6
+  google_fonts: ^4.0.3
+  google_nav_bar: ^5.0.6
+  google_sign_in: ^6.1.6
+  http: ^1.2.1
+  lottie: ^3.0.0
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.11.0
+  flutter_native_splash: ^1.2.1
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icon_aplikasi.png"
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/logo_florist.png
+  android: true
+  ios: true
+  android_gravity: center
+  ios_content_mode: center
+  splash_delay: 1000
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/img/
+
+  fonts:
+    - family: Klasik
+      fonts:
+        - asset: assets/fonts/Klasik Regular.otf
