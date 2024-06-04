@@ -1,3 +1,4 @@
+import 'package:Florist/views/color.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -27,6 +28,84 @@ class KonfirmasiKeluarAplikasi {
         );
       },
     );
+  }
+}
+
+SnackBar snackBarLoginRegister(String message,
+    {EdgeInsetsGeometry margin = const EdgeInsets.all(16),
+    double top = 0.3,
+    double left = 0.1}) {
+  return SnackBar(
+    content: Text(message),
+    backgroundColor: BgTumbuhan.primaryColor,
+    duration: const Duration(seconds: 1),
+    behavior: SnackBarBehavior.floating,
+    margin: const EdgeInsets.only(bottom: 689, right: 14, left: 14, top: 14),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    action: SnackBarAction(
+      label: 'Dismiss',
+      textColor: Colors.white,
+      onPressed: () {},
+    ),
+  );
+}
+
+
+SnackBar customSnackBar(String message,
+    {EdgeInsetsGeometry margin = const EdgeInsets.all(16),
+    double top = 0.3,
+    double left = 0.1}) {
+  return SnackBar(
+    content: Text(message),
+    backgroundColor: BgTumbuhan.primaryColor,
+    duration: const Duration(seconds: 2),
+    behavior: SnackBarBehavior.floating,
+    margin: const EdgeInsets.only(bottom: 600, right: 14, left: 14, top: 14),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    action: SnackBarAction(
+      label: 'Dismiss',
+      textColor: Colors.white,
+      onPressed: () {},
+    ),
+  );
+}
+
+class PopUpKerajang {
+  showCustomSnackbar(BuildContext context, String message) {
+    OverlayEntry overlayEntry;
+    overlayEntry = OverlayEntry(
+      builder: (BuildContext context) => Positioned(
+        top: MediaQuery.of(context).size.height *
+            0.3, // Ubah posisi vertikal sesuai kebutuhan
+        left: MediaQuery.of(context).size.width *
+            0.1, // Ubah posisi horizontal sesuai kebutuhan
+        child: Material(
+          color: const Color.fromARGB(0, 255, 25, 25),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.9),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(overlayEntry);
+
+    // Hapus Snackbar setelah beberapa detik
+    Future.delayed(Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
   }
 }
 

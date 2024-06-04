@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Florist/controller/user_service.dart'; // Ubah path sesuai dengan lokasi AuthService
 import 'package:Florist/model/users/api_response.dart'; // Ubah path sesuai dengan lokasi ApiResponse
-import 'package:Florist/model/users/data_users.dart'; // Ubah path sesuai dengan lokasi DataUser
+// Ubah path sesuai dengan lokasi DataUser
 
 import 'pages.dart'; // Ubah path sesuai dengan lokasi LoginPage
 
@@ -32,7 +32,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -97,7 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
               _buildInputPassword('Password', _passwordController,
                   isPassword: true),
               SizedBox(height: 10),
-              _buildInputPassword('Confirm Password', _confirmPasswordController,
+              _buildInputPassword(
+                  'Confirm Password', _confirmPasswordController,
                   isPassword: true),
               SizedBox(height: 40),
               _buttomRegister(),
@@ -220,7 +220,9 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             TextButton(
               onPressed: () {
-                Get.to(Login(),duration: Duration(milliseconds: 800),transition: Transition.downToUp);
+                Get.to(Login(),
+                    duration: Duration(milliseconds: 800),
+                    transition: Transition.downToUp);
               },
               child: Text(
                 'Sign In',
@@ -248,33 +250,26 @@ class _RegisterPageState extends State<RegisterPage> {
 
     ApiResponseUsers response = await register(
         _nameController.text,
-        _emailController.text, 
+        _emailController.text,
         _passwordController.text,
         _confirmPasswordController.text);
-    if (response.error== null) { // Jika login sukses
-      showSuccessToast(message: 'Berhasil Register');
-      _saveAndRedirectToLogin(response.data as DataUser);
-  } else {
-    setState(() {
-      _isLoading = false;
-    });
-    //
-
-    // Jika gagal, tampilkan pesan error
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${response.error}'),
-      ),
-    );
+    if (response.error == null) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBarLoginRegister(
+        'Berhasil Register',
+      ));
+      Future.delayed(Duration(seconds: 2), () {
+    Get.off(Login(),transition:
+                    Transition.downToUp, // Animasi transisi dari bawah ke atas
+                duration: Duration(milliseconds: 450),
+              );
+  });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(snackBarLoginRegister(
+        'Gagal Register',
+      ));
+    }
   }
-  }
-
-  void _saveAndRedirectToLogin(DataUser user) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('token', user.token ?? '');
-    await pref.setInt('userId', user.id ?? 0);
-    Get.offAll(Login());
-  }
-
-  
 }

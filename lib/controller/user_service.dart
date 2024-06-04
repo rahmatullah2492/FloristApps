@@ -1,51 +1,41 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:Florist/constant.dart';
-import 'package:Florist/model/users/data_users.dart';
 import 'package:Florist/model/users/api_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// login
 Future<ApiResponseUsers> login(String email, String password) async {
-  ApiResponseUsers apiResponse = ApiResponseUsers();
   try {
     final response = await http.post(Uri.parse(loginUrl),
         headers: {'Accept': 'application/json'},
         body: {'email': email, 'password': password});
-    print(response.body);
-    switch (response.statusCode) {
-      case 200:
-        apiResponse.data = DataUser.fromJson(jsonDecode(response.body));
-        break;
-      case 422:
-        final errors = jsonDecode(response.body)['errors'];
-        apiResponse.error = errors[errors.keys.elementAt(0)][0];
-        break;
-      case 403:
-        apiResponse.error = jsonDecode(response.body)['message'];
-        break;
-      default:
-        apiResponse.error = somethingWentWrong;
-        break;
+
+    if (response.statusCode == 200) {
+      return ApiResponseUsers.fromJson(jsonDecode(response.body));
+    } else {
+      return ApiResponseUsers(
+        data: null,
+        error: 'Login failed',
+      );
     }
   } catch (e) {
-    apiResponse.error = serverError;
+    return ApiResponseUsers(
+      data: null,
+      error: 'An error occurred',
+    );
   }
-  return apiResponse;
 }
 
 // register
-Future<ApiResponseUsers> register(String name, String email,
-    String password, String text) async {
+Future<ApiResponseUsers> register(
+    String name, String email, String password, String text) async {
   ApiResponseUsers apiResponse = ApiResponseUsers();
   try {
     final response = await http.post(Uri.parse(registerUrl), headers: {
       'Accept': 'application/json'
-    }, 
-    
-    body: {
+    }, body: {
       'name': name,
       'email': email,
       'password': password,
@@ -53,7 +43,7 @@ Future<ApiResponseUsers> register(String name, String email,
     });
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = DataUser.fromJson(jsonDecode(response.body));
+        //apiResponse.data = DataUser.fromJson(jsonDecode(response.body));
         break;
       case 422:
         final errors = jsonDecode(response.body)['errors'];
@@ -80,7 +70,7 @@ Future<ApiResponseUsers> getUserDetail() async {
     });
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = DataUser.fromJson(jsonDecode(response.body));
+        // apiResponse.data = DataUser.fromJson(jsonDecode(response.body));
         break;
       default:
         apiResponse.error = somethingWentWrong;
@@ -142,15 +132,31 @@ String? getStringImage(File? file) {
 }
 
 
+Future<ApiResponseUsers> uploadProfilePicture(File imageFile) async {
+  ApiResponseUsers apiResponse = ApiResponseUsers();
+  try {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(uploadProfileUrl),
+    );
 
-// class UsersController extends GetxController {
+    // Tambahkan token otentikasi pengguna ke header permintaan
+    String token = await getToken();
+    request.headers['Authorization'] = 'Bearer $token';
 
-//   // Properti loading untuk menandai status pengambilan data
+    // Tambahkan file gambar ke permintaan multipart
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
 
+    var response = await request.send();
 
-//   // Fungsi untuk mengambil data pengguna
-
-  
-
-
-// }
+    if (response.statusCode == 200) {
+      // Jika unggah berhasil, tidak ada pembaruan yang diperlukan dalam data pengguna
+      apiResponse = ApiResponseUsers();
+    } else {
+      apiResponse.error = 'Failed to upload profile picture: ${response.reasonPhrase}';
+    }
+  } catch (e) {
+    apiResponse.error = 'An error occurred: $e';
+  }
+  return apiResponse;
+}

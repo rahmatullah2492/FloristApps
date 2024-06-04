@@ -1,5 +1,5 @@
-import 'package:Florist/controller/user_controller.dart';
 import 'package:Florist/controller/user_service.dart';
+import 'package:Florist/profile/coba.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // Import Get
 import '../popup/pop_up.dart';
@@ -9,8 +9,6 @@ import '../profile/page_profile.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
-
-  final showdataController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -98,54 +96,56 @@ class ProfilePage extends StatelessWidget {
                       onTap: () {
                         // Gunakan Get.to di sini
                         Get.to(
-                          AlamatSaya(),
+                          TanamanListPage(),
                           transition: Transition.downToUp,
                         );
                       },
                     ),
                     ProfileWidget(
-                        icon: Icons.logout,
-                        title: 'Log Out',
-                        onTap: () async {
-                          // Tampilkan dialog konfirmasi untuk keluar dari aplikasi
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Confirm Logout'),
-                                content: Text('Are you sure you want to logout?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      Navigator.of(context).pop();
+                      icon: Icons.logout,
+                      title: 'Log Out',
+                      onTap: () async {
+                        // Tampilkan dialog konfirmasi untuk keluar dari aplikasi
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Confirm Logout'),
+                              content: Text('Are you sure you want to logout?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.of(context).pop();
 
-                                      // Panggil fungsi logout API
-                                      bool loggedOut = await logout();
+                                    // Panggil fungsi logout API
+                                    bool loggedOut = await logout();
 
-                                      if (loggedOut) {
-                                        // Tampilkan pesan berhasil logout
-                                        showSuccessToast(message: 'Logout successful!');
-                                        // Pindah ke halaman login setelah logout
-                                        Get.offAll(Login());
-                                      } else {
-                                        // Tangani kesalahan jika logout gagal
-                                        showToast(message: 'Failed to logout from API');
-                                      }
-                                    },
-                                    child: Text('Logout'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                      ),
+                                    if (loggedOut) {
+                                      // Tampilkan pesan berhasil logout
+                                      showSuccessToast(
+                                          message: 'Logout successful!');
+                                      // Pindah ke halaman login setelah logout
+                                      Get.offAll(Login());
+                                    } else {
+                                      // Tangani kesalahan jika logout gagal
+                                      showToast(
+                                          message: 'Failed to logout from API');
+                                    }
+                                  },
+                                  child: Text('Logout'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -156,3 +156,4 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+

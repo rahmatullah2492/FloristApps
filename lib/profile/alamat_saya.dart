@@ -1,5 +1,3 @@
-import 'package:Florist/controller/user_controller.dart';
-import 'package:Florist/model/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +12,7 @@ class AlamatSaya extends StatefulWidget {
 
 class _AlamatSayaState extends State<AlamatSaya> {
   TextEditingController _alamatRumahController = TextEditingController();
-  final showdataController = Get.find<UserController>();
+  // final showdataController = Get.find<UserController>();
   List<dynamic> listItems = [];
 
   @override
@@ -89,45 +87,45 @@ class _AlamatSayaState extends State<AlamatSaya> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          FutureBuilder<UserData>(
-            future: showdataController.showDataUser(),
-            builder: (BuildContext context, AsyncSnapshot<UserData> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                final user = snapshot.data!;
-                // Set the initial value of the controller to the user's address
-                controller.text = user.data!.alamatRumah.toString();
-                return TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    labelText: labelText,
-                    labelStyle: TextStyle(color: Colors.black),
-                    prefixIcon: Icon(emailIcon),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                  ),
-                  maxLines: null, // allow unlimited lines
-                  minLines: 1,
-                  // onChanged: (value) {
-                  //   setState(() {
-                  //     user.data!.alamatRumah = value;
-                  //   });
-                  // },
-                );
-              }
-            },
-          ),
+          // FutureBuilder<UserData>(
+          //   future: showdataController.showDataUser(),
+          //   builder: (BuildContext context, AsyncSnapshot<UserData> snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     } else if (snapshot.hasError) {
+          //       return Text('Error: ${snapshot.error}');
+          //     } else {
+          //       final user = snapshot.data!;
+          //       // Set the initial value of the controller to the user's address
+          //       controller.text = user.data!.alamatRumah.toString();
+          //       return TextField(
+          //         controller: controller,
+          //         decoration: InputDecoration(
+          //           labelText: labelText,
+          //           labelStyle: TextStyle(color: Colors.black),
+          //           prefixIcon: Icon(emailIcon),
+          //           enabledBorder: OutlineInputBorder(
+          //             borderRadius: BorderRadius.circular(10),
+          //             borderSide: BorderSide(color: Colors.black),
+          //           ),
+          //           focusedBorder: OutlineInputBorder(
+          //             borderRadius: BorderRadius.circular(10),
+          //             borderSide: BorderSide(color: Colors.black),
+          //           ),
+          //         ),
+          //         maxLines: null, // allow unlimited lines
+          //         minLines: 1,
+          //         // onChanged: (value) {
+          //         //   setState(() {
+          //         //     user.data!.alamatRumah = value;
+          //         //   });
+          //         // },
+          //       );
+          //     }
+          //   },
+          // ),
         ],
       ),
     );

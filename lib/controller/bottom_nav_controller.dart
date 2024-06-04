@@ -29,11 +29,11 @@ class BottomNavBarController extends GetxController {
     return [
       const HomePage(),
       ProdukPage(),
-      FavoritePage(
-          favoritedPlants: favorites), // Perbarui penyediaan daftar favorit
+      // FavoritePage(
+      //     favoritedPlants: favorites), // Perbarui penyediaan daftar favorit
       KeranjangPage(
-          addedToCartPlants:
-              myCart), // Perbarui penyediaan daftar item di keranjang belanja
+        addedToCartPlants: [],
+      ), // Perbarui penyediaan daftar item di keranjang belanja
       ProfilePage(),
     ];
   }

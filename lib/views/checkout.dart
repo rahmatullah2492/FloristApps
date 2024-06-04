@@ -5,8 +5,10 @@ import '../widgets/widgets.dart';
 
 class CheckoutPembelian extends StatefulWidget {
   final List<Plant> addedToCartPlants;
-  const CheckoutPembelian({Key? key, required this.addedToCartPlants})
-      : super(key: key);
+  const CheckoutPembelian({
+    Key? key,
+    required this.addedToCartPlants,
+  }) : super(key: key);
 
   @override
   State<CheckoutPembelian> createState() => _CheckoutPembelianState();
@@ -105,7 +107,7 @@ class _CheckoutPembelianState extends State<CheckoutPembelian> {
                       },
                       child: Container(
                         height: 100,
-                        color: Color.fromARGB(255, 168, 7, 7),
+                        color: Colors.red,
                         child: Center(
                           child: Text(
                             'Checkout',

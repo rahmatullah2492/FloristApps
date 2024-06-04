@@ -12,7 +12,6 @@ class LupaPassword extends StatefulWidget {
 }
 
 class _LupaPasswordState extends State<LupaPassword> {
-  
   final FirebaseAuthService _auth = FirebaseAuthService();
   bool _isLoading = false;
 
@@ -173,8 +172,7 @@ class _LupaPasswordState extends State<LupaPassword> {
               onPressed: () {
                 Get.to(
                   Login(),
-                  transition:
-                      Transition.downToUp, // Animasi dari kanan ke kiri
+                  transition: Transition.downToUp, // Animasi dari kanan ke kiri
                   duration: Duration(milliseconds: 800),
                 );
               },
@@ -193,7 +191,8 @@ class _LupaPasswordState extends State<LupaPassword> {
     );
   }
 
-  void _forgotPassword() async { // Tambahkan fungsi _forgotPassword
+  void _forgotPassword() async {
+    // Tambahkan fungsi _forgotPassword
     setState(() {
       _isLoading = true;
     });

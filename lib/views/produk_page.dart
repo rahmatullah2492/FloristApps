@@ -1,13 +1,12 @@
+import 'package:Florist/controller/tanaman_service.dart';
+import 'package:Florist/model/tanaman/api_respone.dart';
+import 'package:Florist/model/tanaman/data_tanaman.dart';
+import 'package:Florist/views/color.dart';
+import 'package:Florist/views/detail_tanaman.dart';
 import 'package:flutter/material.dart';
-//import 'package:get/get.dart';
-//import 'package:lottie/lottie.dart';
-//import '../model/list_tumbuhan.dart';
-//import '../widgets/plant_widget.dart';
-import './pages.dart';
+import 'package:get/get.dart';
 
 class ProdukPage extends StatefulWidget {
-  //final RxList<Plant> favoritedPlants;
-
   const ProdukPage({Key? key}) : super(key: key);
 
   @override
@@ -15,59 +14,112 @@ class ProdukPage extends StatefulWidget {
 }
 
 class _ProdukPageState extends State<ProdukPage> {
+  // Future getTanaman
+  late Future<ApiResponseTanaman> _futureTanaman;
+
+  // Future getTanaman
+  @override
+  void initState() {
+    super.initState();
+    _futureTanaman = getTanaman();
+  }
+
+  // Future getTanaman
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Produk Baru'),
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 4,
-        shadowColor: BgTumbuhan.blackColor,
+        title: Text('Tanaman Baru'),
+        // elevation: 4,
+        // shadowColor: BgTumbuhan.blackColor,
       ),
-      //   body: Obx(
-      //     () => widget.favoritedPlants.isEmpty
-      //         ? Center(
-      //             child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.center,
-      //               mainAxisAlignment: MainAxisAlignment.center,
-      //               children: [
-      //                 SizedBox(
-      //                   height: 200,
-      //                   child: Lottie.asset('assets/img/animasi_favorite.json'),
-      //                 ),
-      //                 const SizedBox(
-      //                   height: 10,
-      //                 ),
-      //                 Text(
-      //                   'Belum Ada Produk Baru',
-      //                   style: TextStyle(
-      //                     color: BgTumbuhan.primaryColor,
-      //                     fontWeight: FontWeight.w300,
-      //                     fontSize: 18,
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           )
-      //         : Container(
-      //             padding:
-      //             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      //             height: size.height * .5,
-      //             child: ListView.builder(
-      //               itemCount: widget.favoritedPlants.length,
-      //               scrollDirection: Axis.vertical,
-      //               physics: const BouncingScrollPhysics(),
-      //               itemBuilder: (BuildContext context, int index) {
+      body: _tampilData(),
+    );
+  }
 
-      //                 return PlantWidget(
-      //                     index: index,
-      //                     plantList: widget.favoritedPlants); // Perbaikan di sini
-      //               },
-      //             ),
-      //           ),
-      //   ),
+  // FutureBuilder
+  Widget _tampilData() {
+    return FutureBuilder<ApiResponseTanaman>(
+      future: _futureTanaman,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator()); // Tampilkan loading
+        } else if (snapshot.hasError) {
+          return Center(
+              child: Text('Error: ${snapshot.error}')); // Tampilkan error
+        } else if (snapshot.hasData) {
+          return _buildTanamanGrid(
+              snapshot.data!.tanaman); // Panggil fungsi _buildTanamanGrid
+        } else {
+          return Center(child: Text('No Data'));
+        }
+      },
+    );
+  }
+
+  // GridView
+  Widget _buildTanamanGrid(List<DataTanaman>? tanamanList) {
+    return GridView.builder(
+      padding: EdgeInsets.all(10),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        // Tambahkan gridDelegate
+        crossAxisCount: 2, // Tambahkan crossAxisCount
+        crossAxisSpacing: 10, // Tambahkan crossAxisSpacing
+        mainAxisSpacing: 10, // Tambahkan mainAxisSpacing
+        childAspectRatio: 0.75, // Tambahkan childAspectRatio
+      ),
+      itemCount: tanamanList?.length ?? 0, // Tambahkan itemCount
+      itemBuilder: (context, index) {
+        // Tambahkan itemBuilder
+        return _buildCard(tanamanList![index]); // Panggil fungsi _buildCard
+      },
+    );
+  }
+
+  Widget _buildCard(DataTanaman tanaman) {
+    return GestureDetector(
+      onTap: () {
+        // Menavigasi ke halaman detail dan meneruskan parameter tanaman
+        Get.to(DetailTanaman(
+          tanaman: tanaman,
+        ));
+      },
+      child: Card(
+        elevation: 3, // Bayangan card
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // image
+            Expanded(
+              child: Image.network(
+                tanaman.imageTanaman ?? '',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            // text
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tanaman.namaTanaman ?? '',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 5),
+                  Text(
+                    'Rp: ${tanaman.hargaTanaman ?? ''}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: BgTumbuhan.primaryColor),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

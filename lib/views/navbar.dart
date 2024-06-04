@@ -50,10 +50,10 @@ class _NavbarPageState extends State<NavbarPage> {
                   icon: Icons.shopify_rounded,
                   text: 'Produk Baru',
                 ),
-                GButton(
-                  icon: Icons.favorite_border,
-                  text: 'Favorite',
-                ),
+                // GButton(
+                //   icon: Icons.favorite_border,
+                //   text: 'Favorite',
+                // ),
                 GButton(
                   icon: Icons.shopping_cart,
                   text: 'Keranjang',

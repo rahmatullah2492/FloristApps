@@ -2,7 +2,6 @@ import 'package:Florist/controller/user_service.dart';
 import 'package:Florist/model/users/data_users.dart';
 import 'package:Florist/popup/pop_up.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:Florist/model/users/api_response.dart'; // Import ApiResponseUsers
@@ -229,30 +228,66 @@ class _LoginState extends State<Login> {
     // Panggil fungsi login dari user_service.dart
     ApiResponseUsers response =
         await login(_emailController.text, _passwordController.text);
-    if (response.error == null) {
-      // Jika login sukses
-      showSuccessToast(message: 'Berhasil Login');
+    if (response.error == null) { // Jika login sukses
+      
+      ScaffoldMessenger.of(context).showSnackBar(snackBarLoginRegister(
+        'Berhasil Login',
+      ));
       _saveAndRedirectToHome(response.data as DataUser);
     } else {
       setState(() {
         _isLoading = false; // Menonaktifkan loading
       });
       // Jika gagal, tampilkan pesan error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${response.error}'),
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBarLoginRegister(
+        'Gagal Login',
+      ));
     }
   }
 
   // Save and redirect to home
   void _saveAndRedirectToHome(DataUser user) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString('token', user.token ?? '');
-    await pref.setInt('userId', user.id ?? 0);
-    Get.off(NavbarPage());
-  }
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.setString('token', user.token ?? '');
+  await pref.setInt('userId', user.id ?? 0);
+  Future.delayed(Duration(seconds: 2), () {
+    Get.off(NavbarPage(),transition:
+                    Transition.downToUp, // Animasi transisi dari bawah ke atas
+                duration: Duration(milliseconds: 450),
+              );
+  });
+}
+
+// void _signIn() async {
+//   if (!_formKey.currentState!.validate()) {
+//     return;
+//   }
+//   setState(() {
+//     _isLoading = true;
+//   });
+
+//   ApiResponseUsers response = await login(_emailController.text, _passwordController.text);
+//   if (response.error == null && response.data != null) {
+//     showSuccessToast(message: 'Berhasil Login');
+//     _saveAndRedirectToHome(response.data!);
+//   } else {
+//     setState(() {
+//       _isLoading = false;
+//     });
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//         content: Text('${response.error}'),
+//       ),
+//     );
+//   }
+// }
+
+// void _saveAndRedirectToHome(DataUser user) async {
+//   SharedPreferences pref = await SharedPreferences.getInstance();
+//   await pref.setString('token', user.token ?? '');
+//   await pref.setInt('userId', user.id ?? 0);
+//   Get.off(NavbarPage());
+// }
 
   Widget _teksBawah() {
     return Align(
@@ -324,9 +359,7 @@ class _LoginState extends State<Login> {
   }
 }
 
-
-
-
+// BISA DIBaWAHIN
 
 // import 'package:Florist/constant.dart';
 // import 'package:Florist/views/pages.dart';
