@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  cached_network_image: ^3.3.1
   cupertino_icons: ^1.0.2
   dio: ^5.4.3+1
   firebase_auth: ^4.19.4
@@ -19,6 +20,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   google_sign_in: ^6.1.6
   http: ^1.2.1
+  image_picker: ^1.1.2
   lottie: ^3.0.0
   readmore: ^3.0.0
   shared_preferences: ^2.2.2
@@ -48,6 +50,8 @@ flutter:
   assets:
     - assets/images/
     - assets/img/
+    - assets/images/logo_florist.png
+   
 
   fonts:
     - family: Klasik

@@ -1,6 +1,5 @@
 const baseUrl = "http://192.168.1.3:80/api"; // wifi rumah
-// const baseUrl = "http://10.10.181.60:80/api"; // WIFI Kampus
-// const baseUrl = 'http://192.168.43.192:80/api'; // hostpot HP
+// const baseUrl = "http://192.168.43.192:80/api"; // WIFI Kampus
 
 // url
 const loginUrl = '$baseUrl/login';
@@ -15,6 +14,7 @@ const keranjangUrl = '$baseUrl/keranjang';
 
 // unggah fotoProfile
 const uploadProfileUrl = '$baseUrl/upload_profile';
+const getProfileUrl = '$baseUrl/get_profile';
 
 // error
 const serverError = 'Server Error';

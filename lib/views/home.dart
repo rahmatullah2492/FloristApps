@@ -333,7 +333,7 @@ Widget _buildScrolTumbuhan() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 16, bottom: 15, top: 15),
+                padding: const EdgeInsets.only(left: 16, bottom: 12, top: 15),
                 child: const Text(
                   'Tanaman Baru',
                   style: TextStyle(

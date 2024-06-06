@@ -57,7 +57,7 @@ class _CheckoutPembelianState extends State<CheckoutPembelian> {
                   ),
           ),
           Container(
-            height: 70, // Tinggi
+            height: 60, // Tinggi
             width: double.infinity,
             color: BgTumbuhan.blackColor.withOpacity(.05),
             child: Padding(
@@ -110,7 +110,7 @@ class _CheckoutPembelianState extends State<CheckoutPembelian> {
                         color: Colors.red,
                         child: Center(
                           child: Text(
-                            'Checkout',
+                            'Buat Pesanan',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
