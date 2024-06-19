@@ -39,4 +39,5 @@ class DataTanaman {
       stokTanaman: json['stok_tanaman'],
     );
   }
+
 }

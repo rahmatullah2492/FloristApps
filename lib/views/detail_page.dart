@@ -273,12 +273,13 @@ class _DetailPageState extends State<DetailPage> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  Get.to(
-                    CheckoutPembelian(
-                      addedToCartPlants: [],
-                    ),
-                    transition: Transition.downToUp,
-                  );
+                  // Get.to(
+                  //   CheckoutPembelian(
+                  //           addedToCartPlants: _keranjangList.where((keranjang) => keranjang.isChecked).toList(),
+                  //           totalHarga: _totalHarga,
+                  //         ),
+                  //   transition: Transition.downToUp,
+                  // );
                   // Handle action when Buy Now button is tapped
                 },
                 child: Container(

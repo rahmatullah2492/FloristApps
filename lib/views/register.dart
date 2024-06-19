@@ -2,7 +2,6 @@ import 'package:Florist/popup/pop_up.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Florist/controller/user_service.dart'; // Ubah path sesuai dengan lokasi AuthService
 import 'package:Florist/model/users/api_response.dart'; // Ubah path sesuai dengan lokasi ApiResponse
 // Ubah path sesuai dengan lokasi DataUser
@@ -22,7 +21,6 @@ class _RegisterPageState extends State<RegisterPage> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController _nameController = TextEditingController();
-
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
@@ -258,11 +256,13 @@ class _RegisterPageState extends State<RegisterPage> {
         'Berhasil Register',
       ));
       Future.delayed(Duration(seconds: 2), () {
-    Get.off(Login(),transition:
-                    Transition.downToUp, // Animasi transisi dari bawah ke atas
-                duration: Duration(milliseconds: 450),
-              );
-  });
+        Get.off(
+          Login(),
+          transition:
+              Transition.downToUp, // Animasi transisi dari bawah ke atas
+          duration: Duration(milliseconds: 450),
+        );
+      });
     } else {
       setState(() {
         _isLoading = false;

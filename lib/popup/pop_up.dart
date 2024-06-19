@@ -52,7 +52,6 @@ SnackBar snackBarLoginRegister(String message,
   );
 }
 
-
 SnackBar customSnackBar(String message,
     {EdgeInsetsGeometry margin = const EdgeInsets.all(16),
     double top = 0.3,

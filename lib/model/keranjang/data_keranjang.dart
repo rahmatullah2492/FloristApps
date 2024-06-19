@@ -1,3 +1,5 @@
+
+
 class DataKeranjang {
   int? id;
   String? imageTanaman;
@@ -5,8 +7,9 @@ class DataKeranjang {
   int? quantity;
   int? userId;
   int? hargaTanaman;
+  int? tanamanId; // Tambahkan properti tanamanId
   bool isChecked;
-  //int? totalHarga;
+  
 
   DataKeranjang({
     this.id,
@@ -15,8 +18,9 @@ class DataKeranjang {
     this.quantity,
     this.userId,
     this.hargaTanaman,
+    this.tanamanId, // Tambahkan tanamanId ke konstruktor
     this.isChecked = false,
-    //this.totalHarga
+    
   });
 
   factory DataKeranjang.fromJson(Map<String, dynamic> json) {
@@ -27,39 +31,156 @@ class DataKeranjang {
       quantity: json['quantity'],
       userId: json['user_id'],
       hargaTanaman: json['harga_tanaman'],
-      // totalHarga: json['total_harga'],
+      tanamanId: json['tanaman_id'], // Tambahkan penanganan tanamanId
+      isChecked: false,
     );
   }
+
+  // Metode toJson untuk mengonversi objek DataKeranjang menjadi representasi JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'image_tanaman': imageTanaman,
+      'nama_tanaman': namaTanaman,
+      'quantity': quantity,
+      'user_id': userId,
+      'harga_tanaman': hargaTanaman,
+      'tanaman_id': tanamanId, // Tambahkan tanamanId ke hasil konversi JSON
+      // Properti lain...
+    };
+  }
+
+   
 }
 
-// class Keranjang {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// class DataKeranjang {
+//   int? id;
 //   String? imageTanaman;
 //   String? namaTanaman;
 //   int? quantity;
+//   int? userId;
 //   int? hargaTanaman;
-//   int? totalHarga;
+//   int? tanamanId; // Tambahkan properti tanamanId
+//   bool isChecked;
 
-//   Keranjang({
+//   DataKeranjang({
+//     this.id,
 //     this.imageTanaman,
 //     this.namaTanaman,
 //     this.quantity,
+//     this.userId,
 //     this.hargaTanaman,
-//     this.totalHarga,
+//     this.tanamanId, // Tambahkan tanamanId ke konstruktor
+//     this.isChecked = false,
 //   });
 
-//   factory Keranjang.fromJson(Map<String, dynamic> json) => Keranjang(
-//         imageTanaman: json['image_tanaman'] as String?,
-//         namaTanaman: json['nama_tanaman'] as String?,
-//         quantity: json['quantity'] as int?,
-//         hargaTanaman: json['harga_tanaman'] as int?,
-//         totalHarga: json['total_harga'] as int?,
-//       );
+//   factory DataKeranjang.fromJson(Map<String, dynamic> json) {
+//     return DataKeranjang(
+//       id: json['id'],
+//       imageTanaman: json['image_tanaman'],
+//       namaTanaman: json['nama_tanaman'],
+//       quantity: json['quantity'],
+//       userId: json['user_id'],
+//       hargaTanaman: json['harga_tanaman'],
+//       tanamanId: json['tanaman_id'] ?? 0,// Tambahkan penanganan tanamanId
+//     );
+//   }
 
-//   Map<String, dynamic> toJson() => {
-//         'image_tanaman': imageTanaman,
-//         'nama_tanaman': namaTanaman,
-//         'quantity': quantity,
-//         'harga_tanaman': hargaTanaman,
-//         'total_harga': totalHarga,
-//       };
+  // Metode toJson untuk mengonversi objek DataKeranjang menjadi representasi JSON
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'id': id,
+  //     'image_tanaman': imageTanaman,
+  //     'nama_tanaman': namaTanaman,
+  //     'quantity': quantity,
+  //     'user_id': userId,
+  //     'harga_tanaman': hargaTanaman,
+  //     'tanaman_id': tanamanId, // Tambahkan tanamanId ke hasil konversi JSON
+  //     // Properti lain...
+  //   };
+  // }
+//}
+
+
+
+
+
+
+
+// class DataKeranjang {
+//   int? id;
+//   String? imageTanaman;
+//   String? namaTanaman;
+//   int? quantity;
+//   int? userId;
+//   int? hargaTanaman;
+//   bool isChecked;
+//   //int? totalHarga;
+
+//   DataKeranjang({
+//     this.id,
+//     this.imageTanaman,
+//     this.namaTanaman,
+//     this.quantity,
+//     this.userId,
+//     this.hargaTanaman,
+//     this.isChecked = false,
+//     //this.totalHarga
+//   });
+
+//   factory DataKeranjang.fromJson(Map<String, dynamic> json) {
+//     return DataKeranjang(
+//       id: json['id'],
+//       imageTanaman: json['image_tanaman'],
+//       namaTanaman: json['nama_tanaman'],
+//       quantity: json['quantity'],
+//       userId: json['user_id'],
+//       hargaTanaman: json['harga_tanaman'],
+//       // totalHarga: json['total_harga'],
+//     );
+//   }
+
+//   get tanamanId {
+//     return id;
+//   }
+
+// // BARU
+//   // Metode toJson untuk mengonversi objek DataKeranjang menjadi representasi JSON
+//   Map<String, dynamic> maps() {
+//     return {
+//       'id': id,
+//       'image_tanaman': imageTanaman,
+//       'nama_tanaman': namaTanaman,
+//       'quantity': quantity,
+//       'user_id': userId,
+//       'harga_tanaman': hargaTanaman,
+//       // Properti lain...
+//     };
+//   }
+
+//   toMap() {}
 // }

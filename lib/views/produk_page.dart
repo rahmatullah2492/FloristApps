@@ -21,7 +21,7 @@ class _ProdukPageState extends State<ProdukPage> {
   @override
   void initState() {
     super.initState();
-    _futureTanaman = getTanaman();
+    _futureTanaman = getTanaman(); // panggil fungsi getTanaman
   }
 
   // Future getTanaman
@@ -65,8 +65,8 @@ class _ProdukPageState extends State<ProdukPage> {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         // Tambahkan gridDelegate
         crossAxisCount: 2, // Tambahkan crossAxisCount
-        crossAxisSpacing: 10, // Tambahkan crossAxisSpacing
-        mainAxisSpacing: 10, // Tambahkan mainAxisSpacing
+        crossAxisSpacing: 2, // Tambahkan crossAxisSpacing
+        mainAxisSpacing: 2, // Tambahkan mainAxisSpacing
         childAspectRatio: 0.75, // Tambahkan childAspectRatio
       ),
       itemCount: tanamanList?.length ?? 0, // Tambahkan itemCount
@@ -86,7 +86,10 @@ class _ProdukPageState extends State<ProdukPage> {
         ));
       },
       child: Card(
-        elevation: 3, // Bayangan card
+        elevation: 1, // Bayangan card
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2), // Atur sudut tumpul di sini
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

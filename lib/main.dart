@@ -1,3 +1,5 @@
+import 'package:Florist/controller/keranjang_service.dart';
+import 'package:Florist/controller/tanaman_service.dart';
 import 'package:flutter/material.dart'; // Untuk menangani tampilan
 import 'package:flutter/services.dart'; // Untuk menangani platform
 import 'package:get/get.dart'; // Untuk menangani routing
@@ -10,6 +12,8 @@ bool? seenOnboard;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  getTanaman();
+  Get.put(KeranjangService()); // Initialize the service
 
   // try {
   //   if (Platform.isAndroid) {
@@ -70,14 +74,15 @@ class _MyAppState extends State<MyApp> {
 //dan memperbarui state isLogin jika pengguna sudah login.
 
   void checkIfLogin() async {
-  SharedPreferences pref = await SharedPreferences.getInstance();
-  bool loginStatus = pref.getString('token') != null;
-  if (loginStatus && mounted) {
-    setState(() {
-      isLogin = true; //adalah variabel yang menunjukkan status login pengguna.
-    });
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    bool loginStatus = pref.getString('token') != null;
+    if (loginStatus && mounted) {
+      setState(() {
+        isLogin =
+            true; //adalah variabel yang menunjukkan status login pengguna.
+      });
+    }
   }
-}
 
   // void checkIfLogin() async {
   //   bool loginStatus = await checkLoginStatus();

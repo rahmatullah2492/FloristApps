@@ -1,5 +1,6 @@
+import 'package:Florist/controller/user_service.dart';
+import 'package:Florist/model/users/api_response.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../views/pages.dart';
 
 class AkunSaya extends StatefulWidget {
@@ -9,11 +10,17 @@ class AkunSaya extends StatefulWidget {
   State<AkunSaya> createState() => _AkunSayaState();
 }
 
+UserService _userService = UserService(); // Deklarasi variabel _userService
+
 class _AkunSayaState extends State<AkunSaya> {
-  // final showdataController = Get.find<UserController>();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _noHpController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _jeniskelaminController = TextEditingController();
+  //TextEditingController _gantiPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -23,10 +30,18 @@ class _AkunSayaState extends State<AkunSaya> {
             right: 0,
             child: _buildHomeNotification(),
           ),
-          // Positioned.fill(
-          //   child: _tampilData(),
-          // ),
-          // Positioned(child: _buildSearch()),
+          Positioned.fill(
+            top: 22,
+            left: 0,
+            right: 0,
+            child: _tampilData(),
+          ),
+          Positioned(
+            bottom: 160,
+            left: 0,
+            right: 0,
+            child: _buttomBuyer(),
+          ),
         ],
       ),
     );
@@ -34,69 +49,151 @@ class _AkunSayaState extends State<AkunSaya> {
 
   Widget _buildHomeNotification() {
     return AppBar(
-      backgroundColor:
-          Colors.white, // Membuat AppBar dengan latar belakang putih
-      shadowColor: BgTumbuhan.blackColor,
-      elevation: 4, // bayangan AppBar
+      backgroundColor: Colors.white,
+      shadowColor: Colors.black,
+      elevation: 4,
       title: Text(
         'Akun Saya',
-        textAlign: TextAlign.center, // Menyusun teks ke tengah
+        textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.black,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.normal,
         ),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.message,
-            color: Colors.black,
+      // actions: [
+      //   IconButton(
+      //     icon: Icon(
+      //       Icons.message,
+      //       color: Colors.black,
+      //     ),
+      //     onPressed: () {
+      //       Get.to(ChatPage());
+      //     },
+      //   ),
+      // ],
+    );
+  }
+
+  Widget _tampilData() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 86),
+          child: FutureBuilder<ApiResponseUsers>(
+            future: _userService.getUser(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (snapshot.data == null || snapshot.data!.data == null) {
+                return Center(child: Text('No user data found'));
+              } else {
+                final user = snapshot.data!.data!;
+                _nameController.text = user.name ?? '';
+                _noHpController.text = user.noTelp ?? '';
+                _emailController.text = user.email ?? '';
+                _jeniskelaminController.text = user.jenisKelamin ?? '';
+                return Card(
+                  color: Colors.white,
+                  elevation: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 16.0,
+                      bottom: 16.0,
+                      left: 16.0,
+                      right: 16.0,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTextField(
+                          labelText: 'Nama',
+                          controller: _nameController,
+                          icon: Icons.person,
+                        ),
+                        _buildTextField(
+                          labelText: 'Nomor Hp',
+                          controller: _noHpController,
+                          icon: Icons.phone,
+                        ),
+                        _buildTextField(
+                          labelText: 'Email',
+                          controller: _emailController,
+                          icon: Icons.email,
+                        ),
+                        _buildTextField(
+                          labelText: 'Jenis Kelamin',
+                          controller: _jeniskelaminController,
+                          icon: Icons.accessibility,
+                        ),
+                        _buildTextField(
+                          labelText: 'Ganti Password',
+                          controller: TextEditingController(text: '**********'),
+                          icon: Icons.lock,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
           ),
-          onPressed: () {
-            Get.to(ChatPage()); // Navigasi ke halaman ChatPage menggunakan GetX
-          },
         ),
       ],
     );
   }
 
-  // Widget _tampilData() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 86),
-  //     child: FutureBuilder(
-  //       future: showdataController.showDataUser(),
-  //       builder: (context, snapshot) {
-  //         if (snapshot.connectionState == ConnectionState.waiting) {
-  //           return Center(child: CircularProgressIndicator());
-  //         } else if (snapshot.hasError) {
-  //           return Text('Error: ${snapshot.error}');
-  //         } else {
-  //           final user = snapshot.data
-  //               as UserData; // Ubah tipe data snapshot.data menjadi User
-  //           return Card(
-  //             child: ListTile(
-  //               leading: CircleAvatar(
-  //                 backgroundImage:
-  //                     NetworkImage(user.data!.fotoProfil.toString()),
-  //                 child: user.data!.fotoProfil ==
-  //                         null // Periksa apakah URL kosong atau null
-  //                     ? null
-  //                     : ErrorWidget(
-  //                         Icon(
-  //                           Icons.error,
-  //                           color: Colors.white,
-  //                         ),
-  //                       ),
-  //               ), // Akses properti fotoProfil
-  //               title: Text(user.data!.namaLengkap.toString()),
-  //               subtitle: Text(user.data!.email.toString()),
-  //             ),
-  //           );
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+  Widget _buttomBuyer() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: BgTumbuhan.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(7.0), // Sudut tumpul
+          ),
+          minimumSize: Size(double.infinity, 60), // Ukuran minimum tombol
+        ),
+        onPressed: () {
+          // Aksi ketika tombol "Buyer" ditekan
+        },
+        child: Text(
+          'Update',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String labelText,
+    required TextEditingController controller,
+    required IconData icon,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: TextField(
+        keyboardType: TextInputType.text,
+        style: TextStyle(color: Colors.black),
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          prefixIcon: Icon(icon),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.edit, color: Colors.red),
+            onPressed: () {
+              // Aksi ketika tombol edit ditekan
+            },
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 //Start Api Users
@@ -124,4 +221,4 @@ class _AkunSayaState extends State<AkunSaya> {
 //     ),
 //   );
 // }
-//End Api Users
+// //End Api Users

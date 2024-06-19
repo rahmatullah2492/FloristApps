@@ -228,8 +228,9 @@ class _LoginState extends State<Login> {
     // Panggil fungsi login dari user_service.dart
     ApiResponseUsers response =
         await login(_emailController.text, _passwordController.text);
-    if (response.error == null) { // Jika login sukses
-      
+    if (response.error == null) {
+      // Jika login sukses
+
       ScaffoldMessenger.of(context).showSnackBar(snackBarLoginRegister(
         'Berhasil Login',
       ));
@@ -247,16 +248,17 @@ class _LoginState extends State<Login> {
 
   // Save and redirect to home
   void _saveAndRedirectToHome(DataUser user) async {
-  SharedPreferences pref = await SharedPreferences.getInstance();
-  await pref.setString('token', user.token ?? '');
-  await pref.setInt('userId', user.id ?? 0);
-  Future.delayed(Duration(seconds: 2), () {
-    Get.off(NavbarPage(),transition:
-                    Transition.downToUp, // Animasi transisi dari bawah ke atas
-                duration: Duration(milliseconds: 450),
-              );
-  });
-}
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('token', user.token ?? '');
+    await pref.setInt('userId', user.id ?? 0);
+    Future.delayed(Duration(seconds: 2), () {
+      Get.off(
+        NavbarPage(),
+        transition: Transition.downToUp, // Animasi transisi dari bawah ke atas
+        duration: Duration(milliseconds: 450),
+      );
+    });
+  }
 
 // void _signIn() async {
 //   if (!_formKey.currentState!.validate()) {

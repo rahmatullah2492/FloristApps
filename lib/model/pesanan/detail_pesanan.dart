@@ -1,33 +1,28 @@
 import 'dart:convert';
 
-class DataDetailPesanan {
-  int? id;
-  String? namaTanaman;
+class DetailPesanan {
   int? tanamanId;
+  String? namaTanaman;
   int? quantity;
   int? subHarga;
 
-  DataDetailPesanan({
-    this.id,
-    this.namaTanaman,
+  DetailPesanan({
     this.tanamanId,
+    this.namaTanaman,
     this.quantity,
     this.subHarga,
   });
 
-  factory DataDetailPesanan.fromMap(Map<String, dynamic> data) =>
-      DataDetailPesanan(
-        id: data['id'] as int?,
-        namaTanaman: data['nama_tanaman'] as String?,
+  factory DetailPesanan.fromMap(Map<String, dynamic> data) => DetailPesanan(
         tanamanId: data['tanaman_id'] as int?,
+        namaTanaman: data['nama_tanaman'] as String?,
         quantity: data['quantity'] as int?,
         subHarga: data['sub_harga'] as int?,
       );
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'nama_tanaman': namaTanaman,
         'tanaman_id': tanamanId,
+        'nama_tanaman': namaTanaman,
         'quantity': quantity,
         'sub_harga': subHarga,
       };
@@ -35,8 +30,8 @@ class DataDetailPesanan {
   /// `dart:convert`
   ///
   /// Parses the string and returns the resulting Json object as [DetailPesanan].
-  factory DataDetailPesanan.fromJson(String data) {
-    return DataDetailPesanan.fromMap(json.decode(data) as Map<String, dynamic>);
+  factory DetailPesanan.fromJson(String data) {
+    return DetailPesanan.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`

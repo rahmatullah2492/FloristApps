@@ -1,3 +1,4 @@
+
 // import 'package:Florist/model/keranjang/data_keranjang.dart';
 
 // class ApiResponseKeranjang {
@@ -5,12 +6,27 @@
 //   String? error;
 //   String? message;
 
-//   ApiResponseKeranjang({this.keranjang, this.error});
+//   ApiResponseKeranjang({this.keranjang, this.error, this.message});
 
-//   Future<List<DataKeranjang>> getKeranjang() {
-//     return Future<List<DataKeranjang>>.value(keranjang!);
+//   factory ApiResponseKeranjang.fromJson(Map<String, dynamic> json) {
+//     return ApiResponseKeranjang(
+//       keranjang: json['keranjang'] != null
+//           ? List<DataKeranjang>.from(
+//               json['keranjang'].map((item) => DataKeranjang.fromJson(item)))
+//           : null,
+//       error: json['error'],
+//       message: json['message'],
+//     );
 //   }
+
+//   // Method untuk mendapatkan daftar keranjang dari respons
+//   List<DataKeranjang>? getKeranjangList() {
+//     return keranjang;
+//   }
+
+  
 // }
+
 
 import 'package:Florist/model/keranjang/data_keranjang.dart';
 
@@ -23,9 +39,9 @@ class ApiResponseKeranjang {
 
   factory ApiResponseKeranjang.fromJson(Map<String, dynamic> json) {
     return ApiResponseKeranjang(
-      keranjang: json['keranjang'] != null
+      keranjang: json['data'] != null
           ? List<DataKeranjang>.from(
-              json['keranjang'].map((item) => DataKeranjang.fromJson(item)))
+              json['data'].map((item) => DataKeranjang.fromJson(item)))
           : null,
       error: json['error'],
       message: json['message'],
@@ -33,7 +49,7 @@ class ApiResponseKeranjang {
   }
 
   // Method untuk mendapatkan daftar keranjang dari respons
-  List<DataKeranjang> getKeranjangList() {
-    return keranjang ?? [];
+  List<DataKeranjang>? getKeranjangList() {
+    return keranjang;
   }
 }

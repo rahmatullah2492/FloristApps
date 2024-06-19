@@ -19,39 +19,73 @@ class DetailTanaman extends StatefulWidget {
 
 class _DetailTanamanState extends State<DetailTanaman> {
   bool isSelected = false;
+  late int tanamanId; // tanamanId di sini
 
-  // kode percobaaan
+  @override
+  void initState() {
+    super.initState();
+    if (widget.tanaman.id != null) {
+      tanamanId = widget.tanaman.id!;
+      print('tanamanId di initState: $tanamanId');
+    } else {
+      print('tanamanId di initState: null');
+    }
+  }
 
-  void addToCart() async {
+  void addToCart({required DataTanaman tanaman}) async {
     setState(() {
       isSelected = !isSelected; // Perbarui isSelected saat tombol diklik
     });
 
+    print('tanamanId sebelum dipanggil addToKeranjang: $tanamanId');
+
     try {
-      // Panggil fungsi addKeranjang
       ApiResponseKeranjang response = await addToKeranjang(
         widget.tanaman.namaTanaman!, // Nama tanaman (pastikan tidak null)
-        1.toString(),
-        1,  // Quantity (dalam bentuk int)
+        '1', // Quantity (dalam bentuk string)
+        1, // ID pengguna
+        tanamanId, // ID tanaman
       );
+
+      print(response);
 
       // Periksa apakah keranjang berhasil ditambahkan
       if (response.message != null) {
         print("Keranjang berhasil ditambahkan: ${response.message}");
+        Get.snackbar(
+          'Sukses',
+          'Tanaman berhasil ditambahkan ke keranjang',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
       } else {
         // Tangani kesalahan
         print("Gagal menambahkan keranjang: ${response.error}");
+        Get.snackbar(
+          'Error',
+          'Gagal menambahkan tanaman ke keranjang',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
       }
     } catch (error) {
       // Tangani kesalahan
       print("Gagal menambahkan keranjang: $error");
+      Get.snackbar(
+        'Error',
+        'Terjadi kesalahan saat menambahkan tanaman ke keranjang',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
-  // kode percobaaan
-
   @override
   Widget build(BuildContext context) {
+    print('ID Tanaman: $tanamanId');
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -168,8 +202,7 @@ class _DetailTanamanState extends State<DetailTanaman> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text:
-                                      '${widget.tanaman.kelembapanTanaman ?? ''}',
+                                  text: '${widget.tanaman.kelembapanTanaman ?? ''}',
                                   style: TextStyle(
                                     color: BgTumbuhan.primaryColor,
                                     fontSize: 18.0,
@@ -362,7 +395,9 @@ class _DetailTanamanState extends State<DetailTanaman> {
               height: 50,
               width: 50,
               child: IconButton(
-                onPressed: addToCart, // Ubah di sini
+                onPressed: () {
+                  addToCart(tanaman: widget.tanaman); 
+                },
                 icon: Icon(
                   Icons.shopping_cart,
                   color: isSelected ? Colors.white : BgTumbuhan.primaryColor,
@@ -413,16 +448,3 @@ class _DetailTanamanState extends State<DetailTanaman> {
     );
   }
 }
-
-// void addToCart() {
-//   setState(() {
-//     isSelected = !isSelected;
-//     if (isSelected) {
-//       _cartList.add(widget.tanaman);
-//     } else {
-//       _cartList.remove(widget.tanaman);
-//     }
-//   });
-// }
-
-

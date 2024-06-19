@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.1.3:80/api"; // wifi rumah
+const baseUrl = "http://192.168.1.10:80/api"; // wifi rumah
 // const baseUrl = "http://192.168.43.192:80/api"; // WIFI Kampus
 
 // url
@@ -8,7 +8,6 @@ const logoutUrl = '$baseUrl/logout';
 const userUrl = '$baseUrl/user';
 const detailUserUrl = '$baseUrl/detail_users';
 const pesananUrl = '$baseUrl/pesanans';
-const detailPesananUrl = '$baseUrl/detail_pesanan';
 const tanamanUrl = '$baseUrl/tanaman';
 const keranjangUrl = '$baseUrl/keranjang';
 

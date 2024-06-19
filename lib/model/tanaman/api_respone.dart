@@ -12,4 +12,3 @@ class ApiResponseTanaman {
     return Future<List<DataTanaman>>.value(tanaman!);
   }
 }
-
