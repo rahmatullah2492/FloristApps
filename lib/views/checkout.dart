@@ -72,11 +72,12 @@ class _CheckoutPembelianState extends State<CheckoutPembelian> {
 
     request.fields['user_id'] = userId.toString();
     request.fields['total_harga'] = widget.totalHarga.toStringAsFixed(0);
-    request.fields['status'] = 'completed';
+    request.fields['status'] = 'pending'; // Ubah status menjadi "pending"
 
     for (var i = 0; i < widget.addedToCartPlants.length; i++) {
       final plant = widget.addedToCartPlants[i];
-      request.fields['detail_pesanan[$i][tanaman_id]'] = plant.id.toString();
+      request.fields['detail_pesanan[$i][tanaman_id]'] =
+          plant.tanamanId.toString();
       request.fields['detail_pesanan[$i][nama_tanaman]'] =
           plant.namaTanaman ?? '';
       request.fields['detail_pesanan[$i][quantity]'] =
@@ -111,6 +112,7 @@ class _CheckoutPembelianState extends State<CheckoutPembelian> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,18 +135,22 @@ class _CheckoutPembelianState extends State<CheckoutPembelian> {
 
             return Column(
               children: [
-                Container(
-                  color: Colors.green[50],
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.local_shipping, color: Colors.green),
-                      SizedBox(width: 8.0),
-                      Text(
-                        'Berhasil mendapatkan Gratis Ongkir',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                    ],
+                // Container untuk informasi pengiriman, alamat, dsb.
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: Colors.green[50],
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.local_shipping, color: Colors.green),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'Berhasil mendapatkan Gratis Ongkir',
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(

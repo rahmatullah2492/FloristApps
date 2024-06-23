@@ -2,23 +2,23 @@
 
 class DataKeranjang {
   int? id;
+  int? tanamanId; 
   String? imageTanaman;
   String? namaTanaman;
   int? quantity;
   int? userId;
   int? hargaTanaman;
-  int? tanamanId; // Tambahkan properti tanamanId
   bool isChecked;
   
 
   DataKeranjang({
     this.id,
+    this.tanamanId,
     this.imageTanaman,
     this.namaTanaman,
     this.quantity,
     this.userId,
     this.hargaTanaman,
-    this.tanamanId, // Tambahkan tanamanId ke konstruktor
     this.isChecked = false,
     
   });
@@ -26,12 +26,13 @@ class DataKeranjang {
   factory DataKeranjang.fromJson(Map<String, dynamic> json) {
     return DataKeranjang(
       id: json['id'],
+      tanamanId: json['tanaman_id'], 
       imageTanaman: json['image_tanaman'],
       namaTanaman: json['nama_tanaman'],
       quantity: json['quantity'],
       userId: json['user_id'],
       hargaTanaman: json['harga_tanaman'],
-      tanamanId: json['tanaman_id'], // Tambahkan penanganan tanamanId
+      
       isChecked: false,
     );
   }
